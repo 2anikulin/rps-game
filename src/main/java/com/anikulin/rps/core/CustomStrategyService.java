@@ -2,9 +2,8 @@ package com.anikulin.rps.core;
 
 
 /**
- * Created by anikulin on 28.09.17.
+ * Implementation of custom strategy service.
  */
 public class CustomStrategyService extends DefaultStrategyService {
-
 
 }

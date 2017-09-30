@@ -1,10 +1,15 @@
 package com.anikulin.rps.core;
 
 /**
- * Created by anikulin on 28.09.17.
+ * Exception.
+ * Incorrect type of RPSType enum.
  */
 public class RPSTypeException extends Exception {
 
+    /**
+     * Constructor.
+     * @param message Error message.
+     */
     public RPSTypeException(String message) {
         super(message);
     }

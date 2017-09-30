@@ -8,10 +8,16 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 
 /**
- * Created by anikulin on 29.09.17.
+ * Application Root class.
+ *
+ * Implements processing of input arguments.
+ * Runs strategies on the test datasets and collect statistics.
+ * Executes user shell.
  */
 public class Application {
 
@@ -19,23 +25,38 @@ public class Application {
     private static final int SUCCESS_CODE = 0;
 
     private final StrategyService strategyService;
-    private final Datasource dataSource;
+    private final DataSource dataSource;
 
     private int episodeCounter = 0;
     private int winCounter = 0;
     private int loseCounter = 0;
+    private String gameOutputLog;
 
+    /**
+     * Constructor
+     * @param strategyService Strategy service instance
+     */
     public Application(final StrategyService strategyService) {
         this.strategyService = strategyService;
         this.dataSource = resourcePath -> FileUtils.readLines(new File(resourcePath), Charset.defaultCharset());
     }
 
-    public Application(final StrategyService strategyService, final Datasource dataSource) {
+    /**
+     * Constructor
+     * @param strategyService Strategy service instance
+     * @param dataSource DataSource instance. Provide an access to the test datasets
+     */
+    public Application(final StrategyService strategyService, final DataSource dataSource) {
         this.dataSource = dataSource;
         this.strategyService = strategyService;
     }
 
-
+    /**
+     * Input argument processor.
+     *
+     * @param args Command line arguments
+     * @return Error code
+     */
     public int run(final String[] args) {
 
         Options options = new Options();
@@ -95,7 +116,7 @@ public class Application {
             if (resourcePath != null) {
                 try {
                     playDatasource(strategy, resourcePath);
-                    printStatistic();
+                    printStatistics();
 
                 } catch (IOException e) {
                     System.out.println("Wrong resource path: " + resourcePath);
@@ -113,10 +134,11 @@ public class Application {
     }
 
     private void executeShell() {
-        new UserShell().execute();
+        new UserShell(this).execute();
     }
 
     private void playDatasource(final Strategy strategy, final String resourcePath) throws IOException {
+        clearStatistics();
         dataSource.getValues(resourcePath).forEach(
                 (String e) -> {
                     try {
@@ -140,7 +162,14 @@ public class Application {
         );
     }
 
-    private void collectStatistics(RPSType opponentBid, RPSType strategyBid) throws IOException {
+    /**
+     * Collect game statistics.
+     *
+     * @param opponentBid Bid of opponent.
+     * @param strategyBid Bid of strategy.
+     * @throws IOException
+     */
+    public void collectStatistics(RPSType opponentBid, RPSType strategyBid) throws IOException {
 
         episodeCounter++;
 
@@ -152,8 +181,14 @@ public class Application {
             loseCounter++;
         }
 
+        if (gameOutputLog == null) {
+            gameOutputLog = String.format(
+                    "game_log_%s.csv", new SimpleDateFormat("yyyy-MM-dd").format(new Date())
+            );
+        }
+
         FileUtils.writeLines(
-                new File("game_episode_results.csv"),
+                new File(gameOutputLog),
                 Collections.singletonList(
                         String.format(
                                 "%s,%s,%s",
@@ -166,7 +201,10 @@ public class Application {
         );
     }
 
-    private void printStatistic() {
+    /**
+     * Print to console statistics of current game.
+     */
+    public void printStatistics() {
         System.out.println("-------------Statistics----------");
         System.out.println(String.format("Game episodes count: %d", episodeCounter));
         System.out.println(String.format("Win count: %d", winCounter));
@@ -178,14 +216,36 @@ public class Application {
         System.out.println(String.format("Dead heat count: %d", deadHeat));
     }
 
+    /**
+     * Clear statistics counters.
+     */
+    public void clearStatistics() {
+        episodeCounter = 0;
+        winCounter = 0;
+        loseCounter = 0;
+        gameOutputLog = null;
+    }
+
+    /**
+     * Get count of game episodes.
+     * @return count
+     */
     public int getEpisodeCounter() {
         return episodeCounter;
     }
 
+    /**
+     * Get count of strategy win
+     * @return count
+     */
     public int getWinCounter() {
         return winCounter;
     }
 
+    /**
+     * Get count of strategy lost.
+     * @return count.
+     */
     public int getLoseCounter() {
         return loseCounter;
     }

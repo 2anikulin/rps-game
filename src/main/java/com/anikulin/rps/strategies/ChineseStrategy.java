@@ -6,9 +6,12 @@ import com.anikulin.rps.core.Strategy;
 import java.util.Random;
 
 /**
- * Created by anikulin on 28.09.17
- *
+ * This strategy implement a chinese investigation provided in this document
  * https://arxiv.org/pdf/1404.5199v1.pdf
+ *
+ * Plus some modification from my side:
+ * If strategy lose last N times - it change strategy vise versa.
+ *
  */
 public class ChineseStrategy implements Strategy {
 
@@ -16,22 +19,35 @@ public class ChineseStrategy implements Strategy {
     private static final int OPPONENT = 0;
     private static final int STRATEGY = 1;
 
-    private int LOST_BARIER = 5;
+    private int LOST_BARRIER = 5;
 
     private RPSType[] lastEpisodeValues;
     private boolean inverse = false;
     private int lostCount;
 
+    /**
+     * Get strategy id;
+     * @return id
+     */
     @Override
     public String getId() {
         return ID;
     }
 
+    /**
+     * Get decision.
+     * @return decision.
+     */
     @Override
     public RPSType getDecision() {
         return lastEpisodeValues == null ? getRandomDecision() : getHistoryBasedDecision();
     }
 
+    /**
+     * On episode finished
+     * @param opponent Opponent bid.
+     * @param strategy Strategy bid.
+     */
     @Override
     public void onEpisodeFinish(RPSType opponent, RPSType strategy) {
         lastEpisodeValues = new RPSType[]{opponent, strategy};
@@ -40,10 +56,10 @@ public class ChineseStrategy implements Strategy {
             lostCount++;
         }
 
-        if (lostCount == LOST_BARIER) {
+        if (lostCount == LOST_BARRIER) {
             lostCount = 0;
             inverse = !inverse;
-            LOST_BARIER = new Random().nextInt(10);
+            LOST_BARRIER = new Random().nextInt(10);
         }
     }
 

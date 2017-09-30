@@ -1,11 +1,15 @@
 package com.anikulin.rps.core;
 
 /**
- * Created by anikulin on 28.09.17.
+ * Strategy Service Factory.
  */
 public class StrategyServiceFactory {
 
+    /**
+     * Create a new strategy service.
+     * @return Service instance.
+     */
     public static StrategyService getStrategyService() {
-        return new CustomStrategyService();
+        return new DefaultStrategyService();
     }
 }

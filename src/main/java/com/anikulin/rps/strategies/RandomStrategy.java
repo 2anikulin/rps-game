@@ -6,22 +6,36 @@ import com.anikulin.rps.core.Strategy;
 import java.util.Random;
 
 /**
- * Created by anikulin on 28.09.17
+ * This is simple random strategy.
+ * Nothing special.
  */
 public class RandomStrategy implements Strategy {
 
     private static final String ID = "random";
 
+    /**
+     * Get strategy id;
+     * @return id
+     */
     @Override
     public String getId() {
         return ID;
     }
 
+    /**
+     * Get decision.
+     * @return decision.
+     */
     @Override
     public RPSType getDecision() {
         return RPSType.values()[(int)(RPSType.values().length *  Math.random())];
     }
 
+    /**
+     * On episode finished
+     * @param opponent Opponent bid.
+     * @param strategy Strategy bid.
+     */
     @Override
     public void onEpisodeFinish(RPSType opponent, RPSType strategy) {
 

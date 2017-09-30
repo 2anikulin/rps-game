@@ -3,12 +3,22 @@ package com.anikulin.rps.core;
 import java.util.List;
 
 /**
- * Created by anikulin on 28.09.17.
+ * Strategy Service Interface.
+ * Contract for strategies management.
  */
 public interface StrategyService {
 
+    /**
+     * Get strategy by id
+     * @param id Strategy id.
+     * @return Strategy or null if doesn't exists.
+     */
     Strategy getStrategy(String id);
 
+    /**
+     * Get list of strategies.
+     * @return Strategies list.
+     */
     List<Strategy> getStrategies();
 
 }
