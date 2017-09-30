@@ -9,7 +9,7 @@ import java.util.List;
 public interface StrategyService {
 
     /**
-     * Get strategy by id
+     * Get strategy by id.
      * @param id Strategy id.
      * @return Strategy or null if doesn't exists.
      */

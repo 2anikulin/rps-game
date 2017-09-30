@@ -21,7 +21,7 @@ public enum RPSType {
      * @param description Entity description.
      * @param beatId Id of beaten (lose) entity for current one.
      */
-    private RPSType(final String id, final String description, final String beatId) {
+    RPSType(final String id, final String description, final String beatId) {
         this.description = description;
         this.id = id;
         this.beat = beatId;
@@ -44,7 +44,9 @@ public enum RPSType {
             try {
                 beat = parse((String) beat);
             } catch (RPSTypeException e) {
+                //CHECKSTYLE.OFF: This is critical exception. Application must be terminated
                 throw new RuntimeException("Incorrect RPSType of 'betId' in the constructor: " + beat);
+                //CHECKSTYLE.ON
             }
         }
 
@@ -67,7 +69,7 @@ public enum RPSType {
 
 
     /**
-     * Get enum value from given string
+     * Get enum value from given string.
      * of throw exception.
      * @param input String value. It can be short value 'P' and long value 'Paper'.
      * @return Enum entity.

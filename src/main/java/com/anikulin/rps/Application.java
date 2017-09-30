@@ -27,13 +27,13 @@ public class Application {
     private final StrategyService strategyService;
     private final DataSource dataSource;
 
-    private int episodeCounter = 0;
-    private int winCounter = 0;
-    private int loseCounter = 0;
+    private int episodeCounter;
+    private int winCounter;
+    private int loseCounter;
     private String gameOutputLog;
 
     /**
-     * Constructor
+     * Constructor.
      * @param strategyService Strategy service instance
      */
     public Application(final StrategyService strategyService) {
@@ -42,7 +42,7 @@ public class Application {
     }
 
     /**
-     * Constructor
+     * Constructor.
      * @param strategyService Strategy service instance
      * @param dataSource DataSource instance. Provide an access to the test datasets
      */
@@ -125,8 +125,7 @@ public class Application {
             } else {
                 executeShell();
             }
-        }
-        else {
+        } else {
             executeShell();
         }
 
@@ -154,7 +153,9 @@ public class Application {
                     } catch (IOException ex) {
                         System.out.println("Can't write output file");
                         ex.printStackTrace();
+                        //CHECKSTYLE.OFF: We have to catch all strategy exceptions
                     } catch (Exception ex) {
+                        //CHECKSTYLE.ON:
                         System.out.println("Unknown strategy error");
                         ex.printStackTrace();
                     }
@@ -167,9 +168,9 @@ public class Application {
      *
      * @param opponentBid Bid of opponent.
      * @param strategyBid Bid of strategy.
-     * @throws IOException
+     * @throws IOException .
      */
-    public void collectStatistics(RPSType opponentBid, RPSType strategyBid) throws IOException {
+    public void collectStatistics(final RPSType opponentBid, final RPSType strategyBid) throws IOException {
 
         episodeCounter++;
 
@@ -211,7 +212,9 @@ public class Application {
 
         int deadHeat = episodeCounter - loseCounter - winCounter;
 
+        //CHECKSTYLE.OFF: Magic number 100 is obvious
         System.out.println(String.format("Win percent %s %%", winCounter * 1.0 / (episodeCounter - deadHeat) * 100.0));
+        //CHECKSTYLE.ON
         System.out.println(String.format("Lose count: %d", loseCounter));
         System.out.println(String.format("Dead heat count: %d", deadHeat));
     }
@@ -235,8 +238,8 @@ public class Application {
     }
 
     /**
-     * Get count of strategy win
-     * @return count
+     * Get count of strategy win.
+     * @return count.
      */
     public int getWinCounter() {
         return winCounter;

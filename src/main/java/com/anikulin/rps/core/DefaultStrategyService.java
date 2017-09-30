@@ -41,7 +41,7 @@ public class DefaultStrategyService implements StrategyService {
      * @return Strategy or null if doesn't exists.
      */
     @Override
-    public Strategy getStrategy(String id) {
+    public Strategy getStrategy(final String id) {
         return strategies.get(id);
     }
 

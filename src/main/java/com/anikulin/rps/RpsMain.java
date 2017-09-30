@@ -9,7 +9,7 @@ import com.anikulin.rps.core.StrategyServiceFactory;
 public class RpsMain {
 
     /**
-     * Application main function
+     * Application main function.
      * @param args input arguments
      *
      * -t [test file path] Set file with test scenario
@@ -17,7 +17,7 @@ public class RpsMain {
      * -ls Shows all available strategies
      * -h Shows help
      */
-    public static void main( String[] args ) {
+    public static void main(final String[] args ) {
 
         new Application(
                 StrategyServiceFactory.getStrategyService()

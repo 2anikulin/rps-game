@@ -6,7 +6,7 @@ import com.anikulin.rps.core.Strategy;
 import java.util.Random;
 
 /**
- * This strategy implement a chinese investigation provided in this document
+ * This strategy implements a chinese investigation provided in this document
  * https://arxiv.org/pdf/1404.5199v1.pdf
  *
  * Plus some modification from my side:
@@ -18,15 +18,17 @@ public class ChineseStrategy implements Strategy {
     private static final String ID = "chinese";
     private static final int OPPONENT = 0;
     private static final int STRATEGY = 1;
+    private static final int MAX_LOST_BARRIER = 10;
+    private static final int DEFAULT_LOST_BARRIER = 5;
 
-    private int LOST_BARRIER = 5;
+    private int LOST_BARRIER = DEFAULT_LOST_BARRIER;
 
     private RPSType[] lastEpisodeValues;
-    private boolean inverse = false;
+    private boolean inverse;
     private int lostCount;
 
     /**
-     * Get strategy id;
+     * Get strategy id.
      * @return id
      */
     @Override
@@ -44,12 +46,12 @@ public class ChineseStrategy implements Strategy {
     }
 
     /**
-     * On episode finished
+     * On episode finished.
      * @param opponent Opponent bid.
      * @param strategy Strategy bid.
      */
     @Override
-    public void onEpisodeFinish(RPSType opponent, RPSType strategy) {
+    public void onEpisodeFinish(final RPSType opponent, final RPSType strategy) {
         lastEpisodeValues = new RPSType[]{opponent, strategy};
 
         if (opponent.isWin(strategy) == 1) {
@@ -59,12 +61,12 @@ public class ChineseStrategy implements Strategy {
         if (lostCount == LOST_BARRIER) {
             lostCount = 0;
             inverse = !inverse;
-            LOST_BARRIER = new Random().nextInt(10);
+            LOST_BARRIER = new Random().nextInt(MAX_LOST_BARRIER);
         }
     }
 
     private RPSType getRandomDecision() {
-        return RPSType.values()[(int)(RPSType.values().length *  Math.random())];
+        return RPSType.values()[(int) (RPSType.values().length *  Math.random())];
     }
 
     private RPSType getHistoryBasedDecision() {

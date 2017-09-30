@@ -3,8 +3,6 @@ package com.anikulin.rps.strategies;
 import com.anikulin.rps.core.RPSType;
 import com.anikulin.rps.core.Strategy;
 
-import java.util.Random;
-
 /**
  * This is simple random strategy.
  * Nothing special.
@@ -14,7 +12,7 @@ public class RandomStrategy implements Strategy {
     private static final String ID = "random";
 
     /**
-     * Get strategy id;
+     * Get strategy id.
      * @return id
      */
     @Override
@@ -28,16 +26,16 @@ public class RandomStrategy implements Strategy {
      */
     @Override
     public RPSType getDecision() {
-        return RPSType.values()[(int)(RPSType.values().length *  Math.random())];
+        return RPSType.values()[(int) (RPSType.values().length *  Math.random())];
     }
 
     /**
-     * On episode finished
+     * On episode finished.
      * @param opponent Opponent bid.
      * @param strategy Strategy bid.
      */
     @Override
-    public void onEpisodeFinish(RPSType opponent, RPSType strategy) {
+    public void onEpisodeFinish(final RPSType opponent, final RPSType strategy) {
 
     }
 }

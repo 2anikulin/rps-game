@@ -10,7 +10,7 @@ public class RPSTypeException extends Exception {
      * Constructor.
      * @param message Error message.
      */
-    public RPSTypeException(String message) {
+    public RPSTypeException(final String message) {
         super(message);
     }
 }

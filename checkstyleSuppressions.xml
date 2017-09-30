@@ -44,5 +44,20 @@
   <suppress checks="RegexpSingleline"
               files="[/\\]src[/\\]test[/\\]java[/\\]"
             />
+  <suppress checks="RegexpMultiline"
+             files="[a-zA-Z0-9]*\.java"
+            />
+  <suppress checks="ClassDataAbstractionCoupling"
+             files="Application\.java"
+  />
+    <suppress checks="JavaNCSS"
+              files="Application\.java"
+    />
+  <suppress checks="JavaNCSS"
+             files="UserShell\.java"
+  />
+  <suppress checks="JavadocVariable"
+              files="RPSType\.java"
+  />
 </suppressions>
 
