@@ -81,12 +81,16 @@ public class UserShell {
                 try {
                     RPSType opponentBid = RPSType.parse(cmd);
                     RPSType strategyBid = currentStrategy.getDecision();
+
+                    currentStrategy.onEpisodeFinish(opponentBid, strategyBid);
+                    int winCode = strategyBid.isWin(opponentBid);
+
                     System.out.println(
                             String.format(
-                                    "%s + %s = You %s",
+                                    "%s + %s = %s",
                                     opponentBid.getDescription(),
                                     strategyBid.getDescription(),
-                                    strategyBid.isWin(opponentBid) == 1 ? "Lose" : "Win"
+                                    winCode == 1 ? "You Lose" : winCode == -1 ? "You Win":"Dead heat"
                             )
                     );
 
@@ -106,11 +110,9 @@ public class UserShell {
                             break;
                         }
                     }
-
                 } catch (RPSTypeException e) {
                     System.out.println(e.getMessage());
                 }
-
             } else {
                 System.out.println("Unknown command: " + cmd);
             }

@@ -8,7 +8,7 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 /**
- * Created by anikulin on 29.09.17
+ * Main application flow test.
  */
 public class ApplicationTest {
 

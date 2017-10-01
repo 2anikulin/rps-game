@@ -23,7 +23,7 @@ public class ChineseStrategy implements Strategy {
 
     private int LOST_BARRIER = DEFAULT_LOST_BARRIER;
 
-    private RPSType[] lastEpisodeValues;
+    private RPSType[] lastEpisodeBids;
     private boolean inverse;
     private int lostCount;
 
@@ -42,7 +42,7 @@ public class ChineseStrategy implements Strategy {
      */
     @Override
     public RPSType getDecision() {
-        return lastEpisodeValues == null ? getRandomDecision() : getHistoryBasedDecision();
+        return lastEpisodeBids == null ? getRandomDecision() : getHistoryBasedDecision();
     }
 
     /**
@@ -52,10 +52,13 @@ public class ChineseStrategy implements Strategy {
      */
     @Override
     public void onEpisodeFinish(final RPSType opponent, final RPSType strategy) {
-        lastEpisodeValues = new RPSType[]{opponent, strategy};
+        lastEpisodeBids = new RPSType[]{opponent, strategy};
 
-        if (opponent.isWin(strategy) == 1) {
+        int winCode = strategy.isWin(opponent);
+        if (winCode == -1) {
             lostCount++;
+        } else if (winCode == 1) {
+            lostCount = 0;
         }
 
         if (lostCount == LOST_BARRIER) {
@@ -70,6 +73,17 @@ public class ChineseStrategy implements Strategy {
     }
 
     private RPSType getHistoryBasedDecision() {
-        return inverse ? lastEpisodeValues[OPPONENT ].getBeat() : lastEpisodeValues[STRATEGY].getBeat();
+        int winCode = lastEpisodeBids[STRATEGY].isWin(lastEpisodeBids[OPPONENT]);
+        RPSType decision;
+
+        if (winCode == 1) { //if win -> set last opponent bid
+            decision = lastEpisodeBids[OPPONENT];
+        } else  { //if lose -> set bid which beat last opponent bid
+            decision = RPSType.stream().filter(
+                    t -> t.getBeat() == (inverse ? lastEpisodeBids[OPPONENT].getBeat() : lastEpisodeBids[OPPONENT])
+            ).findAny().get();
+        }
+
+        return decision;
     }
 }

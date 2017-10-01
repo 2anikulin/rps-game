@@ -1,6 +1,7 @@
 package com.anikulin.rps.core;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * Enum of game entities.
@@ -25,6 +26,15 @@ public enum RPSType {
         this.description = description;
         this.id = id;
         this.beat = beatId;
+    }
+
+    /**
+     * Get Id of entity.
+     *
+     * @return id.
+     */
+    public String getId() {
+        return id;
     }
 
     /**
@@ -77,7 +87,7 @@ public enum RPSType {
      */
     public static RPSType parse(final String input) throws RPSTypeException {
 
-        return Arrays.stream(RPSType.values()).filter(
+        return RPSType.stream().filter(
                 v -> input.compareToIgnoreCase(
                         input.length() == 1 ? v.id : v.description
                 ) == 0
@@ -90,5 +100,13 @@ public enum RPSType {
                          )
                  )
          );
+    }
+
+    /**
+     * Wrap enum values to stream.
+     * @return Stream of RPSType
+     */
+    public static Stream<RPSType> stream() {
+        return Arrays.stream(RPSType.values());
     }
 }

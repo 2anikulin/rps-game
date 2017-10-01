@@ -184,7 +184,7 @@ public class Application {
 
         if (gameOutputLog == null) {
             gameOutputLog = String.format(
-                    "game_log_%s.csv", new SimpleDateFormat("yyyy-MM-dd").format(new Date())
+                    "game_log_%s.csv", new SimpleDateFormat("yyyy-MM-dd-HH.mm.SS").format(new Date())
             );
         }
 
@@ -213,7 +213,7 @@ public class Application {
         int deadHeat = episodeCounter - loseCounter - winCounter;
 
         //CHECKSTYLE.OFF: Magic number 100 is obvious
-        System.out.println(String.format("Win percent %s %%", winCounter * 1.0 / (episodeCounter - deadHeat) * 100.0));
+        System.out.println(String.format("Strategy Win percent %s %%", winCounter * 1.0 / (episodeCounter - deadHeat) * 100.0));
         //CHECKSTYLE.ON
         System.out.println(String.format("Lose count: %d", loseCounter));
         System.out.println(String.format("Dead heat count: %d", deadHeat));

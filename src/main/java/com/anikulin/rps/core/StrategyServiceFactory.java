@@ -10,6 +10,10 @@ public class StrategyServiceFactory {
      * @return Service instance.
      */
     public static StrategyService getStrategyService() {
-        return new DefaultStrategyService();
+        return Holder.INSTANCE;
+    }
+
+    private static class Holder {
+        private static final StrategyService INSTANCE = new DefaultStrategyService();
     }
 }
