@@ -209,14 +209,15 @@ public class Application {
         System.out.println("-------------Statistics----------");
         System.out.println(String.format("Game episodes count: %d", episodeCounter));
         System.out.println(String.format("Win count: %d", winCounter));
-
+        System.out.println(String.format("Lose count: %d", loseCounter));
         int deadHeat = episodeCounter - loseCounter - winCounter;
+        System.out.println(String.format("Dead heat count: %d", deadHeat));
 
         //CHECKSTYLE.OFF: Magic number 100 is obvious
-        System.out.println(String.format("Strategy Win percent %s %%", winCounter * 1.0 / (episodeCounter - deadHeat) * 100.0));
+        System.out.println(String.format("Strategy Win percent %s %%", winCounter * 1.0 / (episodeCounter) * 100.0));
+        System.out.println(String.format("Strategy lose percent %s %%", loseCounter * 1.0 / (episodeCounter) * 100.0));
+        System.out.println(String.format("Strategy deadheat percent %s %%", loseCounter * 1.0 / (episodeCounter) * 100.0));
         //CHECKSTYLE.ON
-        System.out.println(String.format("Lose count: %d", loseCounter));
-        System.out.println(String.format("Dead heat count: %d", deadHeat));
     }
 
     /**
@@ -252,6 +253,5 @@ public class Application {
     public int getLoseCounter() {
         return loseCounter;
     }
-
 
 }

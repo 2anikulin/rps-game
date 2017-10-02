@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class ProbabilityStrategy implements Strategy {
 
     private static final String ID = "markov";
-    private static final int DEFAULT_MARKOV_CHAIN_LEN = 5;
+    private static final int DEFAULT_MARKOV_CHAIN_LEN = 2;
 
     private final Map<String, State> statesMap;
     private final int markovChainLength;
