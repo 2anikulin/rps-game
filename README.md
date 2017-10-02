@@ -33,7 +33,7 @@ You can use the following shell-commands:
 
 All games bets are stored in the log file (game_log_%date%.csv).
 
-###Run tests
+###Tests
 There are three files with test data-sets. It located at the **'data-sets'** folder
 
 * **test-10.csv** - 10 bids (rows)
@@ -46,6 +46,35 @@ Run jar file with the following parameters:
 Example:
 >java -jar rps-game-1.0.jar -s markov -t ../data-sets/test-10.csv
 
+###Test results
+This are strategies win percent distributions. It shows how to increase (or decrease) win rate
+
+Random strategy
+
+![Alt text](tools/random_300.png)
+
+Chinese strategy
+
+![Alt text](tools/chinese_300.png)
+
+Markov chain strategy
+
+![Alt text](tools/markov_300.png)
+
+
 ##How to implement your own strategy
 If you want to implement your own strategy just write implementation of a 'com.anikulin.rps.core.Strategy' interface and register it at the DefaultStrategyService. What's it!
+
+##Tools
+At the 'tools' folder you can find graph.py utility. It helps you to create 'strategies win percent distributions' graphs.
+
+run: 
+>python graph.py [game log file]
+
+Before using please install libraries:
+
+>sudo pip instal matplotlib
+
+>sudo pip install csv
+
 
