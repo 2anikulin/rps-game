@@ -95,7 +95,7 @@ public enum RPSType {
          .orElseThrow(
                  () -> new RPSTypeException(
                          String.format(
-                                 "Invalid RPSType value: '%s'. It must be one of: ['Rock', 'Paper', 'Scissiors'] or ['R', 'P', 'S']",
+                                 "Invalid RPSType value: '%s'. It must be one of: ['Rock', 'Paper', 'Scissors'] or ['R', 'P', 'S']",
                                  input
                          )
                  )

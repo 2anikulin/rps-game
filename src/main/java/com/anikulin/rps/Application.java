@@ -216,7 +216,7 @@ public class Application {
         //CHECKSTYLE.OFF: Magic number 100 is obvious
         System.out.println(String.format("Strategy Win percent %s %%", winCounter * 1.0 / (episodeCounter) * 100.0));
         System.out.println(String.format("Strategy lose percent %s %%", loseCounter * 1.0 / (episodeCounter) * 100.0));
-        System.out.println(String.format("Strategy deadheat percent %s %%", loseCounter * 1.0 / (episodeCounter) * 100.0));
+        System.out.println(String.format("Strategy deadheat percent %s %%", deadHeat * 1.0 / (episodeCounter) * 100.0));
         //CHECKSTYLE.ON
     }
 
